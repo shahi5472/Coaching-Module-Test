@@ -3,8 +3,10 @@ import 'package:device_preview_plus/device_preview_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app.dart';
 import 'app/config/globals.dart';
@@ -24,6 +26,15 @@ Future<void> main() async {
   await dotenv.load(fileName: F.dotEnvPath);
 
   await initDependencies();
+
+  final prefs = sl<SharedPreferences>();
+  const String firstRun = 'first_run';
+
+  if (prefs.getBool(firstRun) ?? true) {
+    final storage = sl<FlutterSecureStorage>();
+    await storage.deleteAll();
+    await prefs.setBool(firstRun, false);
+  }
 
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
