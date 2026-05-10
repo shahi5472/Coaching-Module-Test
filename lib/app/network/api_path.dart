@@ -20,5 +20,5 @@ class APIPaths {
 
   static APIModel apiName = APIModel(apiEndPoint: "", mockJsonEndPoint: "", isMock: false);
 
-  static APIModel login = APIModel(apiEndPoint: "/auth/login");
+  static APIModel login = APIModel(apiEndPoint: "student/auth/login");
 }

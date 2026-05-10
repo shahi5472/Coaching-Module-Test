@@ -18,19 +18,9 @@ abstract class IGlobalRepository {
 
   Future<Either<Failure, bool>> userLoggedIn();
 
-  Future<Either<Failure, bool>> setUserInformation(LoginResponseModel model);
-
-  Future<Either<Failure, LoginResponseModel>> getUserInformation();
-
   Future<Either<Failure, bool>> clearUserAccessTokens();
 
   Future<Either<Failure, String>> getAccessToken();
 
-  Future<Either<Failure, String>> getNewAccessToken(String params);
-
-  Future<Either<Failure, String>> getRefreshToken();
-
   Future<Either<Failure, bool>> saveAccessToken(String token);
-
-  Future<Either<Failure, bool>> saveRefreshToken(String token);
 }

@@ -40,30 +40,6 @@ class GlobalRepositoryImpl extends IGlobalRepository {
   }
 
   @override
-  Future<Either<Failure, LoginResponseModel>> getUserInformation() async {
-    try {
-      return right(await _localDataSource.getUserInformation());
-    } catch (e) {
-      if (e is Failure) {
-        return left(e);
-      }
-      return left(CacheFailure(e.toString()));
-    }
-  }
-
-  @override
-  Future<Either<Failure, bool>> setUserInformation(LoginResponseModel model) async {
-    try {
-      return right(await _localDataSource.setUserInformation(model));
-    } catch (e) {
-      if (e is Failure) {
-        return left(e);
-      }
-      return left(CacheFailure(e.toString()));
-    }
-  }
-
-  @override
   Future<Either<Failure, bool>> clearUserAccessTokens() async {
     try {
       return Right(await _localDataSource.clearUserAccessTokens());
@@ -88,46 +64,9 @@ class GlobalRepositoryImpl extends IGlobalRepository {
   }
 
   @override
-  Future<Either<Failure, String>> getNewAccessToken(String params) async {
-    try {
-      return const Right("");
-    } catch (e) {
-      if (e is Failure) {
-        return Left(e);
-      }
-      return Left(CacheFailure(e.toString()));
-    }
-  }
-
-  @override
-  Future<Either<Failure, String>> getRefreshToken() async {
-    try {
-      return right(await _localDataSource.getRefreshToken());
-    } catch (e) {
-      if (e is Failure) {
-        return left(e);
-      }
-      return left(CacheFailure(e.toString()));
-    }
-  }
-
-  @override
   Future<Either<Failure, bool>> saveAccessToken(String token) async {
     try {
       await _localDataSource.saveAccessToken(token);
-      return right(true);
-    } catch (e) {
-      if (e is Failure) {
-        return Left(e);
-      }
-      return Left(ServerFailure(e.toString()));
-    }
-  }
-
-  @override
-  Future<Either<Failure, bool>> saveRefreshToken(String token) async {
-    try {
-      await _localDataSource.saveRefreshToken(token);
       return right(true);
     } catch (e) {
       if (e is Failure) {

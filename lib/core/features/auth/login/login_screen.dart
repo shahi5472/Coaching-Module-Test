@@ -8,9 +8,7 @@ import '../../../../utils/constansts/color_constants.dart';
 import '../../../../utils/constansts/dimentions.dart';
 import '../../../../utils/dependency_injection/custom_getit.dart';
 import '../../../../utils/manager/extensions/custom_string_extensions.dart';
-import '../../../base/controller/profile_service.dart';
 import '../../../base/services/global_usecases/save_access_token.dart';
-import '../../../base/services/global_usecases/set_user_info_usecase.dart';
 import '../../../base/widgets/buttons/primary_button.dart';
 import '../../../base/widgets/fields/custom_password_form_view.dart';
 import '../services/usecase/login_usecase.dart';
@@ -27,8 +25,6 @@ class LoginScreen extends StatelessWidget {
         iNavigator: iNavigator,
         loginUseCase: sl<LoginUseCase>(),
         saveAccessToken: sl<SaveAccessToken>(),
-        setUserInfoUseCase: sl<SetUserInfoUseCase>(),
-        profileService: context.read<ProfileService>(),
       ),
       child: const _LoginScreenWidget(),
     );
@@ -70,7 +66,7 @@ class _LoginScreenWidget extends StatelessWidget {
                         if (val.isNullOrEmpty) {
                           return "Please enter email address";
                         }
-                        if (ValidationUtils.isEmailValid(val)) {
+                        if (!ValidationUtils.isEmailValid(val)) {
                           return "Please enter email address";
                         }
                         return null;

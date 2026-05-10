@@ -1,11 +1,10 @@
+import 'package:coaching_module_test/utils/manager/extensions/custom_string_extensions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../../../routes/app_pages.dart';
 import '../../../base/controller/base/base_controller.dart';
-import '../../../base/controller/profile_service.dart';
 import '../../../base/services/global_usecases/save_access_token.dart';
-import '../../../base/services/global_usecases/set_user_info_usecase.dart';
 import '../services/data/params/login_request_params.dart';
 import '../services/usecase/login_usecase.dart';
 
@@ -15,15 +14,11 @@ class LoginScreenController extends BaseController {
     required super.iNavigator,
     required this.loginUseCase,
     required this.saveAccessToken,
-    required this.setUserInfoUseCase,
-    required this.profileService,
   });
 
   ///Use-Case
   final LoginUseCase loginUseCase;
   final SaveAccessToken saveAccessToken;
-  final SetUserInfoUseCase setUserInfoUseCase;
-  final ProfileService profileService;
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController emailEditController = TextEditingController(text: kDebugMode ? "fluttertester@appifylab.com" : null);
@@ -61,11 +56,8 @@ class LoginScreenController extends BaseController {
         showSnackBar(left.message, isError: true);
       },
       (right) async {
-        if (right.success) {
-          await saveAccessToken.call(right.data.token);
-          await setUserInfoUseCase.call(right);
-
-          profileService.setUser(right.data.user);
+        if (right.token.isNullOrEmpty) {
+          await saveAccessToken.call(right.token);
           isLoading = false;
           notifyListeners();
 

@@ -38,22 +38,22 @@ class DioErrorHandlerImpl extends DioErrorHandler {
     switch (response.statusCode) {
       case 501:
       case 500:
-        return DioInternalError(message: response.data?["message"] ?? "Internal error");
+        return DioInternalError(message: response.data?["msg"] ?? "Internal error");
       case 404:
-        return DioNotFoundError(message: response.data?["message"] ?? "Not found");
+        return DioNotFoundError(message: response.data?["msg"] ?? "Not found");
       case 204:
-        return DioContentNotFound(message: response.data?["message"] ?? "Content not found");
+        return DioContentNotFound(message: response.data?["msg"] ?? "Content not found");
       case 400:
-        return DioUnAuthorized(message: response.data?["message"] ?? "Something went wrong");
+        return DioUnAuthorized(message: response.data?["msg"] ?? "Something went wrong");
       case 401:
-        return DioUnAuthorized(message: response.data?["message"] ?? "Un-Authorized Request");
+        return DioUnAuthorized(message: response.data?["msg"] ?? "Un-Authorized Request");
       case 403:
-        return DioUnAuthorized(message: response.data?["message"] ?? "Something went wrong");
+        return DioUnAuthorized(message: response.data?["msg"] ?? "Something went wrong");
       case 409:
-        return ResourceAlreadyExists(message: response.data?["message"] ?? "Already Exists");
+        return ResourceAlreadyExists(message: response.data?["msg"] ?? "Already Exists");
       case 422:
         return UnprocessableEntity(
-          message: response.data?["message"] ?? "Unprocessable Entity",
+          message: response.data?["msg"] ?? "Unprocessable Entity",
           errors: response.data?["errors"] ?? {},
         );
       case 503:

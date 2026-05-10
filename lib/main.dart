@@ -11,7 +11,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'app.dart';
 import 'app/config/globals.dart';
 import 'core/base/controller/app_controller.dart';
-import 'core/base/controller/profile_service.dart';
 import 'core/base/services/global_usecases/clear_user_access_tokens.dart';
 import 'flavors.dart';
 import 'utils/dependency_injection/custom_getit.dart';
@@ -58,7 +57,6 @@ Future<void> main() async {
           clearUserAccessTokensUseCase: sl<ClearUserAccessTokensUseCase>(),
         ),
       ),
-      ChangeNotifierProvider<ProfileService>(create: (_) => ProfileService()),
     ],
     child: const App(),
   );
