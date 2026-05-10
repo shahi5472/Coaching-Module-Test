@@ -1,0 +1,16 @@
+flavors:
+  prod:
+    app:
+      name: "Coaching Module"
+    android:
+      applicationId: "com.shahi.coaching_module"
+    ios:
+      bundleId: "com.shahi.coaching_module"
+
+  dev:
+    app:
+      name: "[Dev] Coaching Module"
+    android:
+      applicationId: "com.shahi.coaching_module.dev"
+    ios:
+      bundleId: "com.shahi.coaching_module.dev"
