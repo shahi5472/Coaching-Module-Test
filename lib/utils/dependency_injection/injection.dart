@@ -21,10 +21,7 @@ import '../../core/base/services/global_repository/global_repository_impl.dart';
 import '../../core/base/services/global_repository/i_global_repository.dart';
 import '../../core/base/services/global_usecases/clear_user_access_tokens.dart';
 import '../../core/base/services/global_usecases/get_access_token_usecase.dart';
-import '../../core/base/services/global_usecases/get_refresh_token_usecase.dart';
-import '../../core/base/services/global_usecases/refresh_token_api_usecase.dart';
 import '../../core/base/services/global_usecases/save_access_token.dart';
-import '../../core/base/services/global_usecases/save_refresh_token.dart';
 import '../../flavors.dart';
 import '../../routes/navigator.dart';
 import '../constansts/global.dart';
@@ -105,21 +102,11 @@ Future<void> initDependencies() async {
   GetIt.instance.registerLazySingleton<GetAccessTokenUseCase>(
     () => GetAccessTokenUseCase(repository: sl<IGlobalRepository>()),
   );
-
-  GetIt.instance.registerLazySingleton<GetRefreshTokenUseCase>(
-    () => GetRefreshTokenUseCase(repository: sl<IGlobalRepository>()),
-  );
   GetIt.instance.registerLazySingleton<SaveAccessToken>(
     () => SaveAccessToken(globalRepository: sl<IGlobalRepository>()),
   );
-  GetIt.instance.registerLazySingleton<SaveRefreshToken>(
-    () => SaveRefreshToken(repository: sl<IGlobalRepository>()),
-  );
   GetIt.instance.registerLazySingleton<ClearUserAccessTokensUseCase>(
     () => ClearUserAccessTokensUseCase(globalRepository: sl<IGlobalRepository>()),
-  );
-  GetIt.instance.registerLazySingleton<RefreshTokenApiUseCase>(
-    () => RefreshTokenApiUseCase(repository: sl<IGlobalRepository>()),
   );
 
   _addDioLogInterceptors();
@@ -154,11 +141,8 @@ Future<void> _addDioLogInterceptors() async {
     DioCustomInterceptors(
       dio: dio,
       getAccessTokenUseCase: sl<GetAccessTokenUseCase>(),
-      getRefreshTokenUseCase: sl<GetRefreshTokenUseCase>(),
       saveAccessToken: sl<SaveAccessToken>(),
-      saveRefreshToken: sl<SaveRefreshToken>(),
       clearUserAccessTokensUseCase: sl<ClearUserAccessTokensUseCase>(),
-      refreshTokenApiUseCase: sl<RefreshTokenApiUseCase>(),
     ),
   ]);
 }

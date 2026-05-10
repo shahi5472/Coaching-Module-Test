@@ -1,16 +1,19 @@
 import '../../../../../../utils/manager/extensions/custom_string_extensions.dart';
 
 class LoginRequestParams {
-  final String username;
-  final String token;
+  final String email;
+  final String password;
+  final String appToken;
 
   const LoginRequestParams({
-    required this.username,
-    required this.token,
+    required this.email,
+    required this.password,
+    this.appToken = "",
   });
 
   Map<String, dynamic> get toJson => {
-    "email": username,
-    if (token.isNullOrEmpty) "token": token,
+    "email": email,
+    "password": password,
+    if (appToken.isNullOrEmpty) "app_token": appToken,
   };
 }

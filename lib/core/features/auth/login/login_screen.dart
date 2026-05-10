@@ -1,3 +1,5 @@
+import 'package:coaching_module_test/core/base/widgets/fields/custom_text_form_view.dart';
+import 'package:coaching_module_test/utils/validation_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -8,11 +10,9 @@ import '../../../../utils/dependency_injection/custom_getit.dart';
 import '../../../../utils/manager/extensions/custom_string_extensions.dart';
 import '../../../base/controller/profile_service.dart';
 import '../../../base/services/global_usecases/save_access_token.dart';
-import '../../../base/services/global_usecases/save_refresh_token.dart';
 import '../../../base/services/global_usecases/set_user_info_usecase.dart';
 import '../../../base/widgets/buttons/primary_button.dart';
 import '../../../base/widgets/fields/custom_password_form_view.dart';
-import '../../../base/widgets/image/custom_image_view.dart';
 import '../services/usecase/login_usecase.dart';
 import 'login_screen_controller.dart';
 
@@ -27,7 +27,6 @@ class LoginScreen extends StatelessWidget {
         iNavigator: iNavigator,
         loginUseCase: sl<LoginUseCase>(),
         saveAccessToken: sl<SaveAccessToken>(),
-        saveRefreshToken: sl<SaveRefreshToken>(),
         setUserInfoUseCase: sl<SetUserInfoUseCase>(),
         profileService: context.read<ProfileService>(),
       ),
@@ -44,16 +43,11 @@ class _LoginScreenWidget extends StatelessWidget {
     return Scaffold(
       extendBodyBehindAppBar: true,
       extendBody: true,
+      backgroundColor: primaryColor,
       body: Stack(
         clipBehavior: Clip.none,
         fit: .expand,
         children: [
-          const Positioned.fill(
-            child: CustomImageView(
-              path: 'assets/images/onboard.svg',
-              fit: BoxFit.cover,
-            ),
-          ),
           Center(
             child: Padding(
               padding: const EdgeInsetsDirectional.symmetric(horizontal: defaultPadding),
@@ -65,18 +59,29 @@ class _LoginScreenWidget extends StatelessWidget {
                   mainAxisAlignment: .center,
                   crossAxisAlignment: .center,
                   children: [
-                    const CustomImageView(
-                      width: 250,
-                      height: 110,
-                      path: 'assets/logo/logo.png',
-                    ),
+                    const FlutterLogo(size: 200),
                     const SizedBox(),
-                    CustomPasswordFormView(
-                      hintText: 'Username',
-                      controller: context.read<LoginScreenController>().userNameEditController,
+                    CustomTextFormView(
+                      hintText: 'Email',
+                      keyboardType: TextInputType.emailAddress,
+                      textInputAction: TextInputAction.next,
+                      controller: context.read<LoginScreenController>().emailEditController,
                       validator: (val) {
                         if (val.isNullOrEmpty) {
-                          return "Please enter username";
+                          return "Please enter email address";
+                        }
+                        if (ValidationUtils.isEmailValid(val)) {
+                          return "Please enter email address";
+                        }
+                        return null;
+                      },
+                    ),
+                    CustomPasswordFormView(
+                      hintText: 'Password',
+                      controller: context.read<LoginScreenController>().passwordEditController,
+                      validator: (val) {
+                        if (val.isNullOrEmpty) {
+                          return "Please enter password";
                         }
                         return null;
                       },
