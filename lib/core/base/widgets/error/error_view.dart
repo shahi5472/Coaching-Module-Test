@@ -28,6 +28,11 @@ class ErrorView extends StatelessWidget {
           spacing: 12,
           mainAxisSize: .min,
           children: [
+            const Icon(
+              Icons.error_outline,
+              size: 50,
+              color: Colors.redAccent,
+            ),
             if (title.isNotEmpty)
               Text(
                 title,
@@ -37,11 +42,6 @@ class ErrorView extends StatelessWidget {
                   color: validationErrorColor,
                 ),
               ),
-            const Icon(
-              Icons.error_outline,
-              size: 50,
-              color: Colors.amber,
-            ),
             if (message.isNotEmpty)
               Text(
                 message,

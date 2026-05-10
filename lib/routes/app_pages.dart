@@ -6,6 +6,7 @@ import '../core/base/services/global_usecases/user_loggedin.dart';
 import '../core/features/auth/depdencies/login_screen_dependencies.dart';
 import '../core/features/auth/login/login_screen.dart';
 import '../core/features/coaching_program/index/coaching_program_list_screen.dart';
+import '../core/features/coaching_program/index/dependencies/coaching_program_list_screen_dependencies.dart';
 import '../utils/constansts/global.dart';
 import '../utils/dependency_injection/custom_getit.dart';
 import 'go_route_wrapper.dart';
@@ -51,7 +52,11 @@ class AppPages {
       GoRoute(
         path: _Paths.home,
         name: _Paths.home,
-        builder: (context, state) => const CoachingProgramListScreen(),
+        builder: (context, state) => GoRouteWrapper(
+          routeName: _Paths.home,
+          iDependencies: CoachingProgramListScreenDependencies.instance,
+          child: const CoachingProgramListScreen(),
+        ),
       ),
     ],
   );
