@@ -22,6 +22,7 @@ import '../../core/base/services/global_repository/i_global_repository.dart';
 import '../../core/base/services/global_usecases/clear_user_access_tokens.dart';
 import '../../core/base/services/global_usecases/get_access_token_usecase.dart';
 import '../../core/base/services/global_usecases/save_access_token.dart';
+import '../../core/base/services/global_usecases/user_loggedin.dart';
 import '../../flavors.dart';
 import '../../routes/navigator.dart';
 import '../constansts/global.dart';
@@ -107,6 +108,9 @@ Future<void> initDependencies() async {
   );
   GetIt.instance.registerLazySingleton<ClearUserAccessTokensUseCase>(
     () => ClearUserAccessTokensUseCase(globalRepository: sl<IGlobalRepository>()),
+  );
+  GetIt.instance.registerLazySingleton<UserLoggedInUseCase>(
+    () => UserLoggedInUseCase(iGlobalRepository: sl<IGlobalRepository>()),
   );
 
   _addDioLogInterceptors();

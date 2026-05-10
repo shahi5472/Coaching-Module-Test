@@ -56,7 +56,7 @@ class LoginScreenController extends BaseController {
         showSnackBar(left.message, isError: true);
       },
       (right) async {
-        if (right.token.isNullOrEmpty) {
+        if (!right.token.isNullOrEmpty) {
           await saveAccessToken.call(right.token);
           isLoading = false;
           notifyListeners();

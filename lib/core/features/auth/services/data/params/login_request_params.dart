@@ -14,6 +14,6 @@ class LoginRequestParams {
   Map<String, dynamic> get toJson => {
     "email": email,
     "password": password,
-    if (appToken.isNullOrEmpty) "app_token": appToken,
+    if (!appToken.isNullOrEmpty) "app_token": appToken,
   };
 }
