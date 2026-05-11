@@ -1,5 +1,9 @@
+import 'dart:convert';
+
+import 'package:coaching_module_test/routes/app_pages.dart';
 import 'package:flutter/widgets.dart';
 
+import '../../../../routes/route_arguments_constants.dart';
 import '../../../base/controller/base/base_controller.dart';
 import '../data/models/coaching_response_model.dart';
 import '../data/models/params/coaching_list_request_params.dart';
@@ -118,5 +122,16 @@ class CoachingProgramListScreenController extends BaseController {
     );
 
     notifyListeners();
+  }
+
+  void navigate(CoachingItem item) {
+    iNavigator.pushNamed(
+      context,
+      Routes.coachingDetails,
+      analyticKey: Routes.coachingDetails,
+      queryParameters: {
+        RouteArgumentsConstants.data: jsonEncode(item.toJson()),
+      },
+    );
   }
 }

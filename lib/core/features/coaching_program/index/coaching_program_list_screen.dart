@@ -67,7 +67,7 @@ class _CoachingProgramWidget extends StatelessWidget {
                                 title: item.title,
                                 memberCount: item.totalMembers,
                                 status: item.status,
-                                onPressed: () {},
+                                onPressed: () => controller.navigate(item),
                               );
                             },
                             childCount: controller.state.items.length,
