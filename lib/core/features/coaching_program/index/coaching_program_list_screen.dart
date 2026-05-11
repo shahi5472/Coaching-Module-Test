@@ -1,5 +1,4 @@
 import 'package:coaching_module_test/core/base/widgets/error/error_view.dart';
-import 'package:coaching_module_test/core/base/widgets/image/custom_image_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -7,6 +6,7 @@ import '../../../../app/config/globals.dart';
 import '../../../../utils/constansts/dimentions.dart';
 import '../../../../utils/dependency_injection/custom_getit.dart';
 import '../data/usecase/coaching_list_usecase.dart';
+import '../widgets/coaching_program_item_card.dart';
 import 'coaching_program_list_screen_controller.dart';
 
 class CoachingProgramListScreen extends StatelessWidget {
@@ -57,32 +57,17 @@ class _CoachingProgramWidget extends StatelessWidget {
                             crossAxisCount: 2,
                             mainAxisSpacing: 12,
                             crossAxisSpacing: 12,
-                            childAspectRatio: 1.4,
+                            childAspectRatio: .8,
                           ),
                           delegate: SliverChildBuilderDelegate(
                             (context, index) {
                               final item = controller.state.items[index];
-
-                              return Card(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(defaultPadding),
-                                  child: Column(
-                                    spacing: defaultPadding,
-                                    children: [
-                                      CustomImageView(
-                                        path: item.cover,
-                                        height: 100,
-                                        width: 100,
-                                        fit: BoxFit.cover,
-                                        borderRadius: const BorderRadiusDirectional.all(
-                                          Radius.circular(defaultBorderRadius),
-                                        ),
-                                      ),
-                                      Text(item.title),
-                                      Text(item.status),
-                                    ],
-                                  ),
-                                ),
+                              return CoachingProgramItemCard(
+                                image: item.cover,
+                                title: item.title,
+                                memberCount: item.totalMembers,
+                                status: item.status,
+                                onPressed: () {},
                               );
                             },
                             childCount: controller.state.items.length,

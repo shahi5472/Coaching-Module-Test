@@ -5,7 +5,7 @@ import '../data/models/coaching_response_model.dart';
 import '../data/models/params/coaching_list_request_params.dart';
 import '../data/usecase/coaching_list_usecase.dart';
 
-enum CoachingListStatus { loading, loadingMore, success, failed }
+enum CoachingListStatus { loading, loadingMore, success, failed, none }
 
 class CoachingListState {
   final int page;
@@ -25,7 +25,7 @@ class CoachingListState {
   factory CoachingListState.initial() => const CoachingListState(
     page: 1,
     items: [],
-    status: CoachingListStatus.loading,
+    status: CoachingListStatus.none,
     message: '',
     hasMore: false,
   );
