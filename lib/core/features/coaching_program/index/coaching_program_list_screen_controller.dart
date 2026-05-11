@@ -1,6 +1,8 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:coaching_module_test/routes/app_pages.dart';
+import 'package:coaching_module_test/utils/constansts/dimentions.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../../../routes/route_arguments_constants.dart';
@@ -63,6 +65,10 @@ class CoachingProgramListScreenController extends BaseController {
 
   bool get _apiCalled => (state.status == CoachingListStatus.loading || state.status == CoachingListStatus.loadingMore);
 
+  final searchEditController = TextEditingController();
+  Timer? _debounce;
+  String query = "";
+
   @override
   void onInit() {
     super.onInit();
@@ -75,7 +81,20 @@ class CoachingProgramListScreenController extends BaseController {
     scrollController
       ..removeListener(_onScroll)
       ..dispose();
+    _debounce?.cancel();
+    searchEditController.dispose();
     super.dispose();
+  }
+
+  void onSearchChanged(String value) {
+    _debounce?.cancel();
+    _debounce = Timer(debouncer, () {
+      if (!context.mounted) return;
+      query = value.trim().toLowerCase();
+      state = state.copyWith(page: 1, items: []);
+      notifyListeners();
+      _fetchCoachingList();
+    });
   }
 
   void _onScroll() {
@@ -101,7 +120,12 @@ class CoachingProgramListScreenController extends BaseController {
     state = state.copyWith(status: isFirstPage ? CoachingListStatus.loading : CoachingListStatus.loadingMore);
     notifyListeners();
 
-    final result = await _coachingUseCase.call(CoachingListRequestParams(page: state.page));
+    final result = await _coachingUseCase.call(
+      CoachingListRequestParams(
+        page: state.page,
+        query: query,
+      ),
+    );
 
     result.fold(
       (failure) {

@@ -154,30 +154,30 @@ class AppTheme {
         ),
         border: const OutlineInputBorder(
           borderSide: BorderSide(color: primaryColor, width: 1.2),
-          borderRadius: BorderRadius.all(Radius.circular(7.0)),
+          borderRadius: BorderRadius.all(Radius.circular(defaultBorderRadius)),
         ),
         focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: primaryColor, width: 1.2),
-          borderRadius: BorderRadius.all(Radius.circular(7.0)),
+          borderRadius: BorderRadius.all(Radius.circular(defaultBorderRadius)),
         ),
         enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: Color(0xFFF8F8F8), width: 1.2),
-          borderRadius: BorderRadius.all(Radius.circular(7.0)),
+          borderRadius: BorderRadius.all(Radius.circular(defaultBorderRadius)),
         ),
         errorBorder: OutlineInputBorder(
           borderSide: BorderSide(color: validationErrorColor.withValues(alpha: 0.15), width: 1.2),
-          borderRadius: const BorderRadius.all(Radius.circular(7.0)),
+          borderRadius: const BorderRadius.all(Radius.circular(defaultBorderRadius)),
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderSide: BorderSide(color: validationErrorColor.withValues(alpha: 0.15), width: 1.2),
-          borderRadius: const BorderRadius.all(Radius.circular(7.0)),
+          borderRadius: const BorderRadius.all(Radius.circular(defaultBorderRadius)),
         ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: primaryColor,
           foregroundColor: Colors.white,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(defaultBorderRadius)),
           maximumSize: const Size(double.infinity, 50),
           minimumSize: const Size(double.infinity, 50),
           textStyle: TextStyle(
@@ -192,7 +192,7 @@ class AppTheme {
         style: OutlinedButton.styleFrom(
           backgroundColor: secondaryColor,
           foregroundColor: Colors.white,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(defaultBorderRadius)),
           maximumSize: const Size(double.infinity, 50),
           minimumSize: const Size(double.infinity, 50),
           textStyle: TextStyle(
@@ -208,7 +208,7 @@ class AppTheme {
         constraints: BoxConstraints(maxWidth: 400),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
-            Radius.circular(8),
+            Radius.circular(defaultBorderRadius),
           ),
         ),
         insetPadding: EdgeInsets.symmetric(

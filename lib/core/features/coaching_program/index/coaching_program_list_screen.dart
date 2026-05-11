@@ -1,4 +1,5 @@
 import 'package:coaching_module_test/core/base/widgets/error/error_view.dart';
+import 'package:coaching_module_test/core/base/widgets/fields/custom_text_form_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -33,12 +34,32 @@ class _CoachingProgramWidget extends StatelessWidget {
     return Consumer<CoachingProgramListScreenController>(
       builder: (context, controller, _) {
         return Scaffold(
-          appBar: AppBar(title: const Text("Coaching Program")),
           body: RefreshIndicator(
             onRefresh: controller.onRefresh,
             child: CustomScrollView(
               controller: controller.scrollController,
               slivers: [
+                SliverAppBar.medium(
+                  pinned: true,
+                  title: const Text('My Coaching'),
+                  centerTitle: true,
+                  actions: [
+                    IconButton(
+                      icon: const Icon(Icons.notifications_outlined),
+                      onPressed: () {},
+                    ),
+                  ],
+                ),
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 4, 16, 12),
+                    child: CustomTextFormView(
+                      hintText: 'Search programs',
+                      controller: controller.searchEditController,
+                      onChanged: controller.onSearchChanged,
+                    ),
+                  ),
+                ),
                 SliverPadding(
                   padding: const EdgeInsetsDirectional.all(defaultPadding),
                   sliver: controller.state.status == CoachingListStatus.loading
