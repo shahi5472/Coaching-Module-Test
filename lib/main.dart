@@ -1,5 +1,4 @@
 import 'package:coaching_module_test/utils/dependency_injection/injection.dart';
-import 'package:coaching_module_test/utils/manager/local_datasource/shared_preference_service.dart';
 import 'package:device_preview_plus/device_preview_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -47,9 +46,6 @@ Future<void> main() async {
   if (F.isProduction) {
     debugPrint = (String? message, {int? wrapWidth}) {};
   }
-
-  final token = await sl<ISharedPreferenceService>().getAccessToken();
-  print("token :: [$token]");
 
   final Widget app = MultiProvider(
     providers: [

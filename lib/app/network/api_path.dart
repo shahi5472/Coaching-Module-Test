@@ -23,4 +23,11 @@ class APIPaths {
   static APIModel login = APIModel(apiEndPoint: "student/auth/login");
 
   static APIModel coachingList = APIModel(apiEndPoint: "student/coaching-programs/getEnrolledCoachingProgramList");
+
+  static APIModel coachingDetails(int id) => APIModel(apiEndPoint: "coach/feeds/content/$id");
+
+  static APIModel coachingFeedList({
+    required int programId,
+    required int sessionId,
+  }) => APIModel(apiEndPoint: "/coach/feeds/get-all/$programId/session/$sessionId");
 }

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 
 class CoachingListResponseModel extends Equatable {
@@ -139,7 +141,7 @@ class CoachingItem extends Equatable {
   final String title;
   final String slug;
   final String type;
-  final String settings;
+  final CoachingSettings settings;
   final String thumbnail;
   final String cover;
   final int totalMembers;
@@ -154,7 +156,7 @@ class CoachingItem extends Equatable {
     this.title = '',
     this.slug = '',
     this.type = '',
-    this.settings = '',
+    this.settings = const CoachingSettings(),
     this.thumbnail = '',
     this.cover = '',
     this.totalMembers = 0,
@@ -174,7 +176,7 @@ class CoachingItem extends Equatable {
     String? title,
     String? slug,
     String? type,
-    String? settings,
+    CoachingSettings? settings,
     String? thumbnail,
     String? cover,
     int? totalMembers,
@@ -207,7 +209,7 @@ class CoachingItem extends Equatable {
       title: json['title'] ?? '',
       slug: json['slug'] ?? '',
       type: json['type'] ?? '',
-      settings: json['settings'] ?? '',
+      settings: json['settings'] != null ? CoachingSettings.fromJsonString(json['settings']) : const CoachingSettings(),
       thumbnail: json['thumbnail'] ?? '',
       cover: json['cover'] ?? '',
       totalMembers: json['total_members'] ?? 0,
@@ -225,7 +227,7 @@ class CoachingItem extends Equatable {
       'title': title,
       'slug': slug,
       'type': type,
-      'settings': settings,
+      'settings': settings.toJsonString(),
       'thumbnail': thumbnail,
       'cover': cover,
       'total_members': totalMembers,
@@ -252,5 +254,88 @@ class CoachingItem extends Equatable {
     enrollmentId,
     expiredAt,
     expiryDate,
+  ];
+}
+
+class CoachingSettings extends Equatable {
+  final String timeZone;
+  final String weekBased;
+  final String submissionVisibility;
+  final bool habitTab;
+  final String dripType;
+  final bool allowSubmissionOnPreviousSessions;
+
+  const CoachingSettings({
+    this.timeZone = '',
+    this.weekBased = '',
+    this.submissionVisibility = '',
+    this.habitTab = false,
+    this.dripType = '',
+    this.allowSubmissionOnPreviousSessions = false,
+  });
+
+  factory CoachingSettings.empty() {
+    return const CoachingSettings();
+  }
+
+  CoachingSettings copyWith({
+    String? timeZone,
+    String? weekBased,
+    String? submissionVisibility,
+    bool? habitTab,
+    String? dripType,
+    bool? allowSubmissionOnPreviousSessions,
+  }) {
+    return CoachingSettings(
+      timeZone: timeZone ?? this.timeZone,
+      weekBased: weekBased ?? this.weekBased,
+      submissionVisibility: submissionVisibility ?? this.submissionVisibility,
+      habitTab: habitTab ?? this.habitTab,
+      dripType: dripType ?? this.dripType,
+      allowSubmissionOnPreviousSessions: allowSubmissionOnPreviousSessions ?? this.allowSubmissionOnPreviousSessions,
+    );
+  }
+
+  factory CoachingSettings.fromJson(Map<String, dynamic> json) {
+    return CoachingSettings(
+      timeZone: json['time_zone'] ?? '',
+      weekBased: json['week_based'] ?? '',
+      submissionVisibility: json['submission_visibility'] ?? '',
+      habitTab: json['habit_tab'] ?? false,
+      dripType: json['drip_type'] ?? '',
+      allowSubmissionOnPreviousSessions: json['allow_submission_on_previous_sessions'] ?? false,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'time_zone': timeZone,
+      'week_based': weekBased,
+      'submission_visibility': submissionVisibility,
+      'habit_tab': habitTab,
+      'drip_type': dripType,
+      'allow_submission_on_previous_sessions': allowSubmissionOnPreviousSessions,
+    };
+  }
+
+  factory CoachingSettings.fromJsonString(String jsonString) {
+    try {
+      final Map<String, dynamic> decoded = jsonDecode(jsonString);
+      return CoachingSettings.fromJson(decoded);
+    } catch (e) {
+      return const CoachingSettings();
+    }
+  }
+
+  String toJsonString() => jsonEncode(toJson());
+
+  @override
+  List<Object?> get props => [
+    timeZone,
+    weekBased,
+    submissionVisibility,
+    habitTab,
+    dripType,
+    allowSubmissionOnPreviousSessions,
   ];
 }
