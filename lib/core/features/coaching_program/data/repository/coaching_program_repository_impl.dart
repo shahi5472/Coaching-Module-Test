@@ -1,7 +1,9 @@
 import 'package:coaching_module_test/app/model/base/errors/failures.dart';
 import 'package:coaching_module_test/core/features/coaching_program/data/models/coaching_details_response_model.dart';
+import 'package:coaching_module_test/core/features/coaching_program/data/models/coaching_note_response_model.dart';
 import 'package:coaching_module_test/core/features/coaching_program/data/models/coaching_response_model.dart';
 import 'package:coaching_module_test/core/features/coaching_program/data/models/params/coaching_list_request_params.dart';
+import 'package:coaching_module_test/core/features/coaching_program/data/models/params/coaching_note_request_params.dart';
 import 'package:coaching_module_test/core/features/coaching_program/data/models/params/get_coaching_details_request_params.dart';
 import 'package:coaching_module_test/core/features/coaching_program/data/models/params/get_coaching_feed_list_request_params.dart';
 import 'package:dartz/dartz.dart';
@@ -45,6 +47,18 @@ class CoachingProgramRepositoryImpl extends ICoachingProgramRepository {
   Future<Either<Failure, GetFeedListResponseModel>> getCoachingFeedList(GetCoachingFeedListRequestParams params) async {
     try {
       return right(await _remoteDataSource.getCoachingFeedList(params));
+    } catch (e) {
+      if (e is Failure) {
+        return left(e);
+      }
+      return left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, CoachingNoteResponseModel>> getCoachingNoteList(CoachingNoteRequestParams params) async {
+    try {
+      return right(await _remoteDataSource.getCoachingNoteList(params));
     } catch (e) {
       if (e is Failure) {
         return left(e);

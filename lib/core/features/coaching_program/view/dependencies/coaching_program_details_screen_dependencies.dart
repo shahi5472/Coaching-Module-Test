@@ -4,6 +4,7 @@ import '../../../../../app/model/base/base_interfaces/i_dependencies.dart';
 import '../../../../../utils/dependency_injection/custom_getit.dart';
 import '../../data/repository/i_coaching_program_repository.dart';
 import '../../data/usecase/get_coaching_details_usecase.dart';
+import '../../data/usecase/get_coaching_note_usecase.dart';
 import '../../data/usecase/get_feed_list_usecase.dart';
 
 class CoachingProgramDetailsScreenDependencies extends IDependencies {
@@ -19,6 +20,9 @@ class CoachingProgramDetailsScreenDependencies extends IDependencies {
     if (!getIt.isRegistered<GetFeedListUseCase>()) {
       getIt.registerLazySingleton<GetFeedListUseCase>(() => GetFeedListUseCase(coachingProgramRepository: sl<ICoachingProgramRepository>()));
     }
+    if (!getIt.isRegistered<GetCoachingNoteUseCase>()) {
+      getIt.registerLazySingleton<GetCoachingNoteUseCase>(() => GetCoachingNoteUseCase(coachingProgramRepository: sl<ICoachingProgramRepository>()));
+    }
   }
 
   @override
@@ -28,6 +32,9 @@ class CoachingProgramDetailsScreenDependencies extends IDependencies {
     }
     if (getIt.isRegistered<GetFeedListUseCase>()) {
       getIt.unregister<GetFeedListUseCase>();
+    }
+    if (getIt.isRegistered<GetCoachingNoteUseCase>()) {
+      getIt.unregister<GetCoachingNoteUseCase>();
     }
   }
 }

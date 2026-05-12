@@ -1,6 +1,8 @@
 import 'package:coaching_module_test/core/features/coaching_program/data/models/coaching_details_response_model.dart';
+import 'package:coaching_module_test/core/features/coaching_program/data/models/coaching_note_response_model.dart';
 import 'package:coaching_module_test/core/features/coaching_program/data/models/coaching_response_model.dart';
 import 'package:coaching_module_test/core/features/coaching_program/data/models/params/coaching_list_request_params.dart';
+import 'package:coaching_module_test/core/features/coaching_program/data/models/params/coaching_note_request_params.dart';
 import 'package:coaching_module_test/core/features/coaching_program/data/models/params/get_coaching_details_request_params.dart';
 import 'package:coaching_module_test/core/features/coaching_program/data/models/params/get_coaching_feed_list_request_params.dart';
 
@@ -40,6 +42,15 @@ class CoachingProgramDataSourceImpl extends ICoachingProgramDataSource {
     );
     if (result.data != null) {
       return GetFeedListResponseModel.fromJson(result.data);
+    }
+    throw const ServerFailure("Something went wrong");
+  }
+
+  @override
+  Future<CoachingNoteResponseModel> getCoachingNoteList(CoachingNoteRequestParams params) async {
+    final result = await _dio.onGet(api: APIPaths.coachingNoteList, queryParameters: params.toJson);
+    if (result.data != null) {
+      return CoachingNoteResponseModel.fromJson(result.data);
     }
     throw const ServerFailure("Something went wrong");
   }

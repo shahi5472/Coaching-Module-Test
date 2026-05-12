@@ -11,11 +11,11 @@ import '../../../../app/config/globals.dart';
 import '../../../../routes/route_arguments_constants.dart';
 import '../../../../utils/constansts/dimentions.dart';
 import '../../../../utils/dependency_injection/custom_getit.dart';
+import '../bottom_sheet/notes_bottom_sheet.dart';
 import '../data/models/coaching_response_model.dart';
 import '../data/usecase/get_coaching_details_usecase.dart';
 import '../data/usecase/get_feed_list_usecase.dart';
 import '../widgets/feed_list_view.dart';
-import '../widgets/notes_bottom_sheet.dart';
 import '../widgets/session_drawer.dart';
 import 'coaching_program_details_screen_controller.dart';
 
@@ -114,7 +114,7 @@ class _CoachingDetailsProgramWidgetState extends State<_CoachingDetailsProgramWi
                         useSafeArea: true,
                         barrierColor: Colors.black12.withValues(alpha: 0.2),
                         backgroundColor: Colors.white,
-                        builder: (_) => const NotesBottomSheet(),
+                        builder: (_) => NotesBottomSheet(coachingProgramId: controller.state.oldData.coachingProgramId),
                       );
                     },
                   ),

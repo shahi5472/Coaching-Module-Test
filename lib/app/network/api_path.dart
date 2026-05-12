@@ -30,4 +30,6 @@ class APIPaths {
     required int programId,
     required int sessionId,
   }) => APIModel(apiEndPoint: "/coach/feeds/get-all/$programId/session/$sessionId");
+
+  static APIModel coachingNoteList = APIModel(apiEndPoint: "coach/feeds/coaching-notes-program-wise");
 }
