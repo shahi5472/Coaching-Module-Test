@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:coaching_module_test/core/base/widgets/error/error_view.dart';
 import 'package:coaching_module_test/core/base/widgets/image/custom_image_view.dart';
+import 'package:coaching_module_test/utils/manager/extensions/font_utils_extensions.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -15,6 +15,7 @@ import '../data/models/coaching_response_model.dart';
 import '../data/usecase/get_coaching_details_usecase.dart';
 import '../data/usecase/get_feed_list_usecase.dart';
 import '../widgets/feed_list_view.dart';
+import '../widgets/notes_bottom_sheet.dart';
 import '../widgets/session_drawer.dart';
 import 'coaching_program_details_screen_controller.dart';
 
@@ -43,6 +44,8 @@ class _CoachingDetailsProgramWidget extends StatefulWidget {
 }
 
 class _CoachingDetailsProgramWidgetState extends State<_CoachingDetailsProgramWidget> {
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   bool isRouterListener = false;
 
   @override
@@ -74,13 +77,92 @@ class _CoachingDetailsProgramWidgetState extends State<_CoachingDetailsProgramWi
     return Consumer<CoachingProgramDetailsScreenController>(
       builder: (context, controller, _) {
         return Scaffold(
+          key: _scaffoldKey,
           drawer: SessionDrawer(
             item: controller.state.oldData,
             sessions: controller.state.sessions,
           ),
-          appBar: AppBar(title: Text(controller.state.coachingDetails.title)),
           body: CustomScrollView(
             slivers: [
+              SliverAppBar(
+                pinned: true,
+                stretch: true,
+                expandedHeight: 220,
+                leading: IconButton(
+                  icon: const Icon(
+                    Icons.menu,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    _scaffoldKey.currentState?.openDrawer();
+                  },
+                ),
+                title: Text(
+                  controller.state.oldData.title,
+                  style: const TextStyle(color: Colors.white),
+                ),
+                actions: [
+                  IconButton(
+                    icon: const Icon(
+                      Icons.sticky_note_2_outlined,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        useSafeArea: true,
+                        barrierColor: Colors.black12.withValues(alpha: 0.2),
+                        backgroundColor: Colors.white,
+                        builder: (_) => const NotesBottomSheet(),
+                      );
+                    },
+                  ),
+                ],
+                flexibleSpace: FlexibleSpaceBar(
+                  background: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      CustomImageView(
+                        path: controller.state.coachingDetails.bannerImg,
+                        fit: BoxFit.cover,
+                      ),
+                      const DecoratedBox(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [Colors.black54, Colors.transparent, Colors.black87],
+                            stops: [0.0, 0.4, 1.0],
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        left: 16,
+                        right: 16,
+                        bottom: 16,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              controller.state.oldData.title,
+                              style: context.titleMedium?.copyWith(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              '${controller.state.oldData.totalMembers} members',
+                              style: context.bodySmall?.copyWith(color: Colors.white70),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
               controller.state.status == CoachingDetailsStatus.loading
                   ? const SliverFillRemaining(child: Center(child: CircularProgressIndicator()))
                   : controller.state.status == CoachingDetailsStatus.failed
@@ -112,26 +194,6 @@ class _Body extends StatelessWidget {
       mainAxisSize: .min,
       crossAxisAlignment: .start,
       children: [
-        CustomImageView(
-          path: controller.state.coachingDetails.bannerImg,
-          height: 300,
-          width: double.infinity,
-          fit: .cover,
-        ),
-        if (controller.state.coachingDetails.desc.isNotEmpty) ...[
-          Padding(
-            padding: const EdgeInsetsDirectional.only(start: defaultPadding, end: defaultPadding),
-            child: Column(
-              spacing: defaultPadding,
-              mainAxisSize: .min,
-              crossAxisAlignment: .start,
-              children: [
-                Text('${controller.state.coachingDetails.meta.membersCount} members'),
-                HtmlWidget(controller.state.coachingDetails.desc),
-              ],
-            ),
-          ),
-        ],
         FeedListView(controller: controller),
       ],
     );
