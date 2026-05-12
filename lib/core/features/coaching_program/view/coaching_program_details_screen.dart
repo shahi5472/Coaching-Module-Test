@@ -137,9 +137,9 @@ class _CoachingDetailsProgramWidgetState extends State<_CoachingDetailsProgramWi
                           ),
                         ),
                       ),
-                      Positioned(
-                        left: 16,
-                        right: 16,
+                      PositionedDirectional(
+                        start: 16,
+                        end: 16,
                         bottom: 16,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
