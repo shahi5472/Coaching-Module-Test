@@ -24,40 +24,67 @@ class CoachingProgramItemCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onPressed,
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: const BorderRadius.all(Radius.circular(defaultBorderRadius)),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withValues(alpha: 0.2),
-              offset: const Offset(0, 0),
-              blurRadius: 2,
-              spreadRadius: 4,
-            ),
-          ],
-        ),
+      child: Card(
+        clipBehavior: Clip.antiAlias,
         child: Column(
-          spacing: defaultPadding / 2,
-          mainAxisSize: .min,
-          crossAxisAlignment: .start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Stack(
-              children: [
-                CustomImageView(
-                  path: image,
-                  height: 130,
-                  width: double.infinity,
-                  fit: .cover,
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(defaultBorderRadius),
-                    topRight: Radius.circular(defaultBorderRadius),
+            Expanded(
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  CustomImageView(
+                    path: image,
+                    height: 130,
+                    width: double.infinity,
+                    fit: .cover,
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(defaultBorderRadius),
+                      topRight: Radius.circular(defaultBorderRadius),
+                    ),
                   ),
-                ),
-                PositionedDirectional(
-                  top: 12,
-                  end: 12,
-                  child: Container(
+                  const DecoratedBox(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.center,
+                        end: Alignment.bottomCenter,
+                        colors: [Colors.transparent, Colors.black87],
+                      ),
+                    ),
+                  ),
+                  PositionedDirectional(
+                    start: 12,
+                    end: 12,
+                    bottom: 12,
+                    child: Text(
+                      title,
+                      maxLines: 2,
+                      overflow: .ellipsis,
+                      style: context.titleMedium?.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsetsDirectional.symmetric(
+                horizontal: defaultPadding / 2,
+                vertical: defaultPadding / 2,
+              ),
+              child: Row(
+                spacing: 4,
+                mainAxisSize: .min,
+                children: [
+                  const Icon(Icons.group_outlined, size: 16),
+                  Text(
+                    "Member: $memberCount",
+                    style: context.labelMedium,
+                  ),
+                  const Spacer(),
+                  Container(
                     decoration: BoxDecoration(
                       color: Colors.green.withValues(alpha: 0.5),
                       borderRadius: const BorderRadius.all(Radius.circular(8)),
@@ -71,23 +98,7 @@ class CoachingProgramItemCard extends StatelessWidget {
                       style: context.labelSmall?.copyWith(color: Colors.white),
                     ),
                   ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsetsDirectional.symmetric(horizontal: defaultPadding / 2),
-              child: Text(
-                title,
-                maxLines: 2,
-                overflow: .ellipsis,
-                style: context.titleMedium,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsetsDirectional.symmetric(horizontal: defaultPadding / 2),
-              child: Text(
-                "Member: $memberCount",
-                style: context.labelMedium,
+                ],
               ),
             ),
           ],
