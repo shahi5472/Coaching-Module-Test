@@ -1,4 +1,5 @@
 import 'package:coaching_module_test/core/features/coaching_program/widgets/shimmer.dart';
+import 'package:coaching_module_test/utils/constansts/dimentions.dart';
 import 'package:flutter/material.dart';
 
 class ProgramLoadingShimmer extends StatelessWidget {
@@ -14,7 +15,12 @@ class ProgramLoadingShimmer extends StatelessWidget {
         childAspectRatio: .8,
       ),
       delegate: SliverChildBuilderDelegate(
-        (context, index) => Shimmer(child: Container(color: Colors.grey)),
+        (context, index) => const Shimmer(
+          child: ClipRRect(
+            borderRadius: BorderRadius.all(Radius.circular(defaultBorderRadius)),
+            child: ColoredBox(color: Colors.grey),
+          ),
+        ),
         childCount: 20,
       ),
     );
