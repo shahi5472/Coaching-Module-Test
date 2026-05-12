@@ -12,9 +12,11 @@ import 'note_bottom_sheet_controller.dart';
 class NotesBottomSheet extends StatelessWidget {
   const NotesBottomSheet({
     super.key,
+    this.scrollController,
     required this.coachingProgramId,
   });
 
+  final ScrollController? scrollController;
   final int coachingProgramId;
 
   @override
@@ -25,20 +27,27 @@ class NotesBottomSheet extends StatelessWidget {
         iNavigator: iNavigator,
         getCoachingNoteUseCase: sl<GetCoachingNoteUseCase>(),
       )..fetchCoachingNote(coachingProgramId: coachingProgramId),
-      child: const _NotesBottomSheetWidget(),
+      child: _NotesBottomSheetWidget(scrollController: scrollController),
     );
   }
 }
 
 class _NotesBottomSheetWidget extends StatelessWidget {
-  const _NotesBottomSheetWidget();
+  const _NotesBottomSheetWidget({this.scrollController});
+
+  final ScrollController? scrollController;
 
   @override
   Widget build(BuildContext context) {
     return Consumer<NoteBottomSheetController>(
       builder: (context, controller, _) {
         return CustomScrollView(
+          controller: scrollController,
           slivers: [
+            const SliverAppBar(
+              title: Text("Coaching Notes"),
+              pinned: true,
+            ),
             if (controller.state.status == CoachingNoteStatus.loading) ...[
               const SliverFillRemaining(child: Center(child: CircularProgressIndicator())),
             ] else if (controller.state.status == CoachingNoteStatus.failed || controller.state.items.isEmpty) ...[
@@ -59,14 +68,20 @@ class _NotesBottomSheetWidget extends StatelessWidget {
                   itemBuilder: (context, index) {
                     final item = controller.state.items[index];
                     return Card(
-                      child: Column(
-                        spacing: 8,
-                        mainAxisSize: .min,
-                        crossAxisAlignment: .start,
-                        children: [
-                          Text(item.title),
-                          HtmlWidget(item.note),
-                        ],
+                      child: Padding(
+                        padding: const EdgeInsetsDirectional.symmetric(
+                          horizontal: defaultPadding,
+                          vertical: defaultPadding / 2,
+                        ),
+                        child: Column(
+                          spacing: 8,
+                          mainAxisSize: .min,
+                          crossAxisAlignment: .start,
+                          children: [
+                            Text(item.title),
+                            HtmlWidget(item.note),
+                          ],
+                        ),
                       ),
                     );
                   },

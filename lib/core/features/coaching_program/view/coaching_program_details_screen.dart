@@ -113,8 +113,27 @@ class _CoachingDetailsProgramWidgetState extends State<_CoachingDetailsProgramWi
                         isScrollControlled: true,
                         useSafeArea: true,
                         barrierColor: Colors.black12.withValues(alpha: 0.2),
-                        backgroundColor: Colors.white,
-                        builder: (_) => NotesBottomSheet(coachingProgramId: controller.state.oldData.coachingProgramId),
+                        backgroundColor: Colors.transparent,
+                        builder: (_) {
+                          return DraggableScrollableSheet(
+                            initialChildSize: 0.8,
+                            minChildSize: 0.4,
+                            maxChildSize: 0.8,
+                            expand: false,
+                            builder: (context, scrollController) {
+                              return Container(
+                                decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.vertical(top: Radius.circular(defaultBorderRadius)),
+                                ),
+                                child: NotesBottomSheet(
+                                  coachingProgramId: controller.state.oldData.coachingProgramId,
+                                  scrollController: scrollController,
+                                ),
+                              );
+                            },
+                          );
+                        },
                       );
                     },
                   ),
