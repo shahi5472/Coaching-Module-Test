@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:coaching_module_test/core/base/widgets/error/error_view.dart';
 import 'package:coaching_module_test/core/base/widgets/image/custom_image_view.dart';
-import 'package:coaching_module_test/utils/manager/extensions/font_utils_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:go_router/go_router.dart';
@@ -16,6 +15,7 @@ import '../data/models/coaching_response_model.dart';
 import '../data/usecase/get_coaching_details_usecase.dart';
 import '../data/usecase/get_feed_list_usecase.dart';
 import '../widgets/feed_list_view.dart';
+import '../widgets/session_drawer.dart';
 import 'coaching_program_details_screen_controller.dart';
 
 class CoachingProgramDetailsScreen extends StatelessWidget {
@@ -74,48 +74,9 @@ class _CoachingDetailsProgramWidgetState extends State<_CoachingDetailsProgramWi
     return Consumer<CoachingProgramDetailsScreenController>(
       builder: (context, controller, _) {
         return Scaffold(
-          drawer: Drawer(
-            child: SafeArea(
-              child: SingleChildScrollView(
-                padding: const EdgeInsetsDirectional.all(defaultPadding / 2),
-                child: Column(
-                  spacing: defaultPadding / 2,
-                  mainAxisSize: .min,
-                  crossAxisAlignment: .start,
-                  children: [
-                    DrawerHeader(
-                      child: Text(
-                        'Sessions',
-                        style: context.titleLarge?.copyWith(fontWeight: .bold),
-                      ),
-                    ),
-                    ...List.generate(controller.state.sessions.length, (index) {
-                      final item = controller.state.sessions[index];
-                      final subSessions = controller.getSubSessions(item.id);
-
-                      return ExpansionTile(
-                        title: Text(item.sessionName),
-                        children: List.generate(subSessions.length, (index) {
-                          final sub = subSessions[index];
-                          final selected = controller.isSelectedSession(sub);
-
-                          return ListTile(
-                            selected: selected,
-                            leading: Icon(selected ? Icons.radio_button_checked : Icons.radio_button_off),
-                            title: Text(sub.sessionName),
-                            onTap: () async {
-                              controller.iNavigator.pop(context);
-
-                              await controller.onSessionChange(sub);
-                            },
-                          );
-                        }),
-                      );
-                    }),
-                  ],
-                ),
-              ),
-            ),
+          drawer: SessionDrawer(
+            item: controller.state.oldData,
+            sessions: controller.state.sessions,
           ),
           appBar: AppBar(title: Text(controller.state.coachingDetails.title)),
           body: CustomScrollView(
