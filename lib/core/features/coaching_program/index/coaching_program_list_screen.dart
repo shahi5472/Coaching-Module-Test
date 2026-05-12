@@ -8,6 +8,7 @@ import '../../../../utils/constansts/dimentions.dart';
 import '../../../../utils/dependency_injection/custom_getit.dart';
 import '../data/usecase/coaching_list_usecase.dart';
 import '../widgets/coaching_program_item_card.dart';
+import '../widgets/program_loading_shimmer.dart';
 import 'coaching_program_list_screen_controller.dart';
 
 class CoachingProgramListScreen extends StatelessWidget {
@@ -63,12 +64,12 @@ class _CoachingProgramWidget extends StatelessWidget {
                 SliverPadding(
                   padding: const EdgeInsetsDirectional.all(defaultPadding),
                   sliver: controller.state.status == CoachingListStatus.loading
-                      ? const SliverFillRemaining(child: Center(child: CircularProgressIndicator()))
-                      : controller.state.status == CoachingListStatus.failed
+                      ? const ProgramLoadingShimmer()
+                      : controller.state.status == CoachingListStatus.failed || controller.state.items.isEmpty
                       ? SliverFillRemaining(
                           child: Center(
                             child: ErrorView(
-                              message: controller.state.message,
+                              message: controller.state.items.isEmpty ? "No item found" : controller.state.message,
                               onPressed: controller.onRefresh,
                             ),
                           ),
