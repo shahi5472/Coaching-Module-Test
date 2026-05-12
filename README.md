@@ -137,20 +137,20 @@ lib/
 ├── app.dart                      # Root widget with connectivity listener
 ├── flavors.dart                  # Flavor definitions (dev / prod)
 └── main.dart                     # Entry point
-
+```
 
 ## Screenshots
 
 <div align="center">
-  <img src="screenshots/screenshot-1778560369114.png" width="200" alt="Screenshot 1"/>
-  <img src="screenshots/screenshot-1778560210751.png" width="200" alt="Screenshot 2"/>
-  <img src="screenshots/screenshot-1778560281874.png" width="200" alt="Screenshot 3"/>
-  <img src="screenshots/screenshot-1778560292700.png" width="200" alt="Screenshot 4"/>
+  <img src="screenshots/screenshot1.png" width="200"/>
+  <img src="screenshots/screenshot2.png" width="200"/>
+  <img src="screenshots/screenshot3.png" width="200"/>
+  <img src="screenshots/screenshot4.png" width="200"/>
 </div>
 
 <div align="center">
-  <img src="screenshots/screenshot-1778560299552.png" width="200" alt="Screenshot 5"/>
-  <img src="screenshots/screenshot-1778560309328.png" width="200" alt="Screenshot 6"/>
-  <img src="screenshots/screenshot-1778560324676.png" width="200" alt="Screenshot 7"/>
-  <img src="screenshots/screenshot-1778560333341.png" width="200" alt="Screenshot 8"/>
+  <img src="screenshots/screenshot5.png" width="200"/>
+  <img src="screenshots/screenshot6.png" width="200"/>
+  <img src="screenshots/screenshot7.png" width="200"/>
+  <img src="screenshots/screenshot8.png" width="200"/>
 </div>
