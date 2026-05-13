@@ -154,3 +154,54 @@ lib/
   <img src="screenshots/screenshot7.png" width="200"/>
   <img src="screenshots/screenshot8.png" width="200"/>
 </div>
+
+# Project Progress Update
+
+## Completed Features
+
+- ✅ Authentication / Login Feature
+- ✅ Coaching Program List Screen
+- ✅ Coaching Details Screen
+    - Integrated with 2 separate API calls
+- ✅ Feed List Screen
+- ✅ Coaching Notes Feature
+- ✅ Task Module (Partially Completed)
+- ✅ Journal Module (Partially Completed)
+
+## Pending / Incomplete Features
+
+- ⏳ Submit Tracker Functionality
+- ⏳ Character Limit Validation
+- ⏳ Task Exercise Date & Time Picker
+- ⏳ Note Visibility Condition Handling
+
+## What Can Be Improved
+
+### Architecture & Code Quality
+
+- Improve folder structure consistency
+- Separate business logic more cleanly from UI layer
+- Add reusable widgets/components to reduce duplication
+
+### State Management
+
+- Migrate to BLoC for larger scalability if needed
+
+### UI/UX Improvements
+
+- Better loading states and skeleton views (For all UI)
+- Improved form validation UX
+- Responsive UI refinements
+
+### Performance
+
+- Optimize API call handling
+- Add caching for feed list
+- Reduce unnecessary widget rebuilds
+
+### Testing
+
+- Add unit tests
+- Add widget tests for critical screens
+- Improve error handling coverage
+
